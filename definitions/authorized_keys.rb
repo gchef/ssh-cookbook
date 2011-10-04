@@ -17,10 +17,12 @@ define :authorized_keys do
     backup false
   end
 
-  ruby_block 'add_ssh_keys' do
-    block do
-      file = "#{home}/.ssh/authorized_keys"
-      File.open(file, 'w') { |f| f.puts ssh_keys }
+  if ssh_keys
+    ruby_block 'add_ssh_keys' do
+      block do
+        file = "#{home}/.ssh/authorized_keys"
+        File.open(file, 'w') { |f| f.puts ssh_keys }
+      end
     end
   end
 end
