@@ -11,3 +11,8 @@ end
 sshd_config "PasswordAuthentication" do
   string "PasswordAuthentication #{node.ssh.password_authentication}"
 end
+
+ssh_authorized_keys "root" do
+  home "/root"
+  ssh_keys node.ssh.authorized_keys
+end
