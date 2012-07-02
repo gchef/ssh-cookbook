@@ -7,8 +7,11 @@ end
 
 action :allow do
   execute "Make remote host known" do
-    command "ssh-keyscan -p #{new_resource.port} #{new_resource.host} >> #{new_resource.local_known_hosts}"
-    not_if "ssh-keygen -F #{new_resource.host}"
+    command %{
+      host_exists="$(ssh-keygen -F #{new_resource.host} -f #{new_resource.local_known_hosts} | grep -c found)"
+      test $host_exists = 0 && ssh-keyscan -p #{new_resource.port} #{new_resource.host} >> #{new_resource.local_known_hosts}
+      exit 0
+    }
   end
 end
 
