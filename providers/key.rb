@@ -1,7 +1,29 @@
 action :create do
-  execute "Create a passphraseless SSH key if missing" do
-    command "ssh-keygen -t rsa -q -f #{new_resource.local_ssh_key} -P ''"
-    not_if "test -f #{new_resource.local_ssh_key}"
+  if new_resource.private_key && new_resource.public_key
+    directory "#{new_resource.home}/.ssh" do
+      owner new_resource.username
+      group new_resource.username
+      mode "0700"
+    end
+
+    file "#{new_resource.home}/.ssh/id_rsa" do
+      content new_resource.private_key
+      owner new_resource.username
+      group new_resource.username
+      mode "0600"
+    end
+
+    file "#{new_resource.home}/.ssh/id_rsa.pub" do
+      content new_resource.public_key
+      owner new_resource.username
+      group new_resource.username
+      mode "0600"
+    end
+  else
+    execute "Create a passphraseless SSH key if missing" do
+      command "ssh-keygen -t rsa -q -f #{new_resource.local_ssh_key} -P ''"
+      not_if "test -f #{new_resource.local_ssh_key}"
+    end
   end
 end
 

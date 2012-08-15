@@ -56,4 +56,5 @@ end
 ### ssh\_key
 
 Handles passphraseless key generation, makes remote hosts known
-(eg. github.com) and copies SSH keys between hosts.
+(eg. github.com) and copies SSH keys between hosts. Can also create keys
+from pre-defined private and public ones.
