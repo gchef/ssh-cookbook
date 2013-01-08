@@ -43,6 +43,12 @@ default[:ssh][:use_dns] = "no"
 default[:ssh][:allowed_groups] = []
 default[:ssh][:allowed_users] = []
 #
+# This is useful when you want to disable users.  The bootstrap cookbook adds
+# all disabled system users to the nologin group.  This here adds the nologin
+# group to the DenyGroups. You can have finer control by using :denied_users.
+default[:ssh][:denied_groups] = ["nologin"]
+default[:ssh][:denied_users] = []
+#
 # Needs no introduction
 default[:ssh][:permit_root_login] = "no"
 #

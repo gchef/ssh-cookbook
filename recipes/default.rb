@@ -38,6 +38,16 @@ ssh_config "AllowUsers" do
   only_if { node[:ssh][:allowed_users].any? }
 end
 
+ssh_config "DenyGroups" do
+  string "DenyGroups #{node[:ssh][:denied_groups].join(' ')}"
+  only_if { node[:ssh][:denied_groups].any? }
+end
+
+ssh_config "DenyUsers" do
+  string "DenyUsers #{node[:ssh][:denied_users].join(' ')}"
+  only_if { node[:ssh][:denied_users].any? }
+end
+
 ssh_authorized_keys "root" do
   home "/root"
   ssh_keys node[:ssh][:root_authorized_keys]
