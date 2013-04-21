@@ -1,5 +1,5 @@
 action :add do
-  bash "Adding to sshd_config" do
+  bash "Adding #{new_resource.name} to sshd_config" do
     code %{
       set -x
       if [ $(egrep -c "^#{new_resource.string}$" /etc/ssh/sshd_config) = 0 ]; then
@@ -15,7 +15,7 @@ action :add do
 end
 
 action :add_multiline do
-  bash "Adding to sshd_config" do
+  bash "Adding #{new_resource.name} to sshd_config" do
     code %{
       set -x
       if [[ ! $(cat /etc/ssh/sshd_config) =~ "#{new_resource.match}" ]]; then
@@ -27,7 +27,7 @@ action :add_multiline do
 end
 
 action :remove do
-  bash "Removing from sshd_config" do
+  bash "Removing #{new_resource.name} from sshd_config" do
     code %{
       set -x
       if [ $(grep -c "#{new_resource.string}" /etc/ssh/sshd_config) != 0 ]; then

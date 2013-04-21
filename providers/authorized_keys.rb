@@ -1,5 +1,6 @@
 action :setup do
-  directory "#{new_resource.home}/.ssh" do
+  directory "#{new_resource.home}/.ssh for authorized_keys" do
+    path "#{new_resource.home}/.ssh"
     owner new_resource.username
     group new_resource.username
     mode  '0700'
