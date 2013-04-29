@@ -1,6 +1,7 @@
 action :create do
   if new_resource.private_key && new_resource.public_key
-    directory "#{new_resource.home}/.ssh" do
+    directory "#{new_resource.home}/.ssh for ssh keys" do
+      path "#{new_resource.home}/.ssh"
       owner new_resource.username
       group new_resource.username
       mode "0700"
